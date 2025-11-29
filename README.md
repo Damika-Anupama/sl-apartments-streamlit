@@ -45,6 +45,15 @@ Configure the database URI in one of the following locations (checked in order):
 1. `.streamlit/secrets.toml` – `uri`, `database.uri`, or `postgres.uri` keys.
 2. Environment variable `DATABASE_URI`.
 
+If your deployment cannot reach IPv6 addresses (e.g., "Cannot assign requested
+address" errors), you can force the app to use an IPv4 endpoint by setting:
+
+- `DATABASE_IPV4_HOST` – an IPv4 hostname or address that should replace the
+  host in the URI.
+- `DATABASE_IPV4_PORT` – optional port to pair with the override host.
+- `DATABASE_PREFER_IPV4` – set to `true`/`1`/`yes` to tell the driver to
+  request IPv4 sockets when both families are available.
+
 Example secrets file:
 
 ```toml

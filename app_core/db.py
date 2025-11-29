@@ -1,6 +1,8 @@
 """Database helpers for interacting with the apartments table."""
 from __future__ import annotations
 
+import os
+import socket
 from typing import Any, Dict
 
 import pandas as pd
@@ -16,7 +18,16 @@ from app_core.constants import APARTMENT_COLUMNS
 def get_engine() -> Engine:
     """Create and cache a SQLAlchemy engine with connection pooling."""
 
-    return create_engine(get_database_uri(), pool_pre_ping=True, future=True)
+    connect_args = {}
+    if os.getenv("DATABASE_PREFER_IPV4", "").lower() in {"1", "true", "yes"}:
+        connect_args["gai_family"] = socket.AF_INET
+
+    return create_engine(
+        get_database_uri(),
+        pool_pre_ping=True,
+        future=True,
+        connect_args=connect_args or None,
+    )
 
 
 def fetch_apartments() -> pd.DataFrame:

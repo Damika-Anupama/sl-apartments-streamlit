@@ -48,8 +48,11 @@ Configure the database URI in one of the following locations (checked in order):
 Example secrets file:
 
 ```toml
-uri = "postgresql://USER:PASSWORD@HOST:5432/DBNAME"
+uri = "postgresql+psycopg://USER:PASSWORD@HOST:5432/DBNAME"
 ```
+
+> The app automatically upgrades legacy `postgresql://` or `postgres://` URLs to the
+> `psycopg` driver so it runs on Python 3.13 without needing `pg_config`.
 
 ---
 

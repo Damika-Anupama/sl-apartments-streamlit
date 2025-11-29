@@ -30,12 +30,28 @@ def get_database_uri() -> str:
     for path in secret_paths:
         value = _read_from_secrets(path)
         if value:
-            return value
+            return _normalize_postgres_uri(value)
 
     env_uri = os.getenv("DATABASE_URI")
     if env_uri:
-        return env_uri
+        return _normalize_postgres_uri(env_uri)
 
     raise RuntimeError(
         "Database URI not found. Add it to Streamlit secrets or set DATABASE_URI."
     )
+
+
+def _normalize_postgres_uri(uri: str) -> str:
+    """Coerce postgres URIs to the psycopg3 driver if none is provided."""
+
+    if uri.startswith("postgresql+"):
+        return uri
+
+    # Handle the common shorthand some providers still use.
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+
+    if uri.startswith("postgresql://"):
+        return uri.replace("postgresql://", "postgresql+psycopg://", 1)
+
+    return uri

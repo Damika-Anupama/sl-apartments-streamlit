@@ -1,9 +1,3 @@
-Below is a **clean, professional, comprehensive README.md** tailored exactly for your project: a Streamlit-based apartment data collection system, first implemented with CSV storage, then upgraded to PostgreSQL, and designed for future ML expansion.
-
-You can paste this directly into your repository as **README.md**.
-
----
-
 # 🏙️ Colombo Apartment Data Collection System
 
 *A Streamlit-based data entry + visualization platform for building a long-term apartment dataset for ML analysis.*

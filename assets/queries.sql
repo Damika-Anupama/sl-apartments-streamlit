@@ -10,27 +10,14 @@ CREATE TABLE apartments (
     scraped_date DATE,                     -- when YOU entered it
 
     -- location
-    city VARCHAR(100),
-    area VARCHAR(100),
-    district VARCHAR(100),
-    address_line VARCHAR(200),
-    latitude DOUBLE PRECISION,
-    longitude DOUBLE PRECISION,
+    location VARCHAR(100),
 
     -- price & financials
-    price_input_value NUMERIC(10,2) NOT NULL
+    price NUMERIC(10,2) NOT NULL
         CHECK (price_input_value > 0),
-    price_input_unit VARCHAR(10) NOT NULL
-        CHECK (price_input_unit IN ('lakhs', 'millions')),
-    price_lkr BIGINT NOT NULL
-        CHECK (price_lkr > 0),
-    price_currency VARCHAR(10) NOT NULL DEFAULT 'LKR',
     price_negotiable BOOLEAN,
-
-    maintenance_fee_lkr INTEGER,
-    maintenance_fee_per_sqft NUMERIC(10,2),
-    other_monthly_fees_lkr INTEGER,
-    rent_frequency VARCHAR(20), -- per_month, per_day, etc.
+    maintenance_fee INTEGER,
+    other_monthly_fees INTEGER,
 
     -- basic property attributes
     bedrooms SMALLINT NOT NULL
